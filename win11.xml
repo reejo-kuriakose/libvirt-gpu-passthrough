@@ -1,6 +1,6 @@
 <domain xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0" type="kvm">
-  <name>win10</name>
-  <uuid>98248c70-da50-4aec-86e5-bd647b2c200b</uuid>
+  <name>win11</name>
+  <uuid>0eeb2ce2-c533-42f5-adc9-75a6df1d7b53</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://microsoft.com/win/10"/>
@@ -14,6 +14,19 @@
     <access mode="shared"/>
   </memoryBacking>
   <vcpu placement="static">8</vcpu>
+  <iothreads>1</iothreads>
+  <cputune>
+    <vcpupin vcpu="0" cpuset="8"/>
+    <vcpupin vcpu="1" cpuset="9"/>
+    <vcpupin vcpu="2" cpuset="10"/>
+    <vcpupin vcpu="3" cpuset="11"/>
+    <vcpupin vcpu="4" cpuset="12"/>
+    <vcpupin vcpu="5" cpuset="13"/>
+    <vcpupin vcpu="6" cpuset="14"/>
+    <vcpupin vcpu="7" cpuset="15"/>
+    <emulatorpin cpuset="0-7"/>
+    <iothreadpin iothread="1" cpuset="0-7"/>
+  </cputune>
   <os>
     <type arch="x86_64" machine="pc-q35-6.2">hvm</type>
     <loader readonly="yes" type="pflash">/usr/share/edk2/ovmf/OVMF_CODE.fd</loader>
@@ -59,9 +72,9 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type="file" device="disk">
       <driver name="qemu" type="qcow2"/>
-      <source file="/run/media/reejo/C638DAEF38DADE0D/Documents and Settings/Reejo Kuriakose/Documents/VM/win10.qcow2"/>
-      <target dev="vda" bus="virtio"/>
-      <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
+      <source file="/home/reejo/win11/win11.qcow2"/>
+      <target dev="sda" bus="sata"/>
+      <address type="drive" controller="0" bus="0" target="0" unit="0"/>
     </disk>
     <controller type="usb" index="0" model="qemu-xhci" ports="15">
       <address type="pci" domain="0x0000" bus="0x02" slot="0x00" function="0x0"/>
@@ -181,8 +194,8 @@
       <address type="pci" domain="0x0000" bus="0x00" slot="0x1b" function="0x0"/>
     </sound>
     <audio id="1" type="jack">
-      <input clientName="win10" connectPorts="EasyEffects Source:input_F[LR]"/>
-      <output clientName="win10" connectPorts="EasyEffects Source:playback_F[LR]"/>
+      <input clientName="win10" connectPorts="Family 17h/19h HD Audio Controller Analog Stereo:capture_F[LR]"/>
+      <output clientName="win10" connectPorts="Family 17h/19h HD Audio Controller Analog Stereo:playback_F[LR]"/>
     </audio>
     <video>
       <model type="none"/>
@@ -191,14 +204,14 @@
       <source>
         <address domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
       </source>
-      <rom bar="on" file="/home/reejo/Downloads/TU117.rom"/>
-      <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
+      <rom bar="on" file="/home/reejo/win11/TU117.rom"/>
+      <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
     </hostdev>
     <hostdev mode="subsystem" type="pci" managed="yes">
       <source>
         <address domain="0x0000" bus="0x01" slot="0x00" function="0x1"/>
       </source>
-      <address type="pci" domain="0x0000" bus="0x08" slot="0x00" function="0x0"/>
+      <address type="pci" domain="0x0000" bus="0x05" slot="0x00" function="0x0"/>
     </hostdev>
     <redirdev bus="usb" type="spicevmc">
       <address type="usb" bus="0" port="2"/>
